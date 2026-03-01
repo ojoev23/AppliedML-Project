@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
 
 # Load data and make day of the weeks
 df = pd.read_csv("../data/AAPL_raw.csv", parse_dates=True, header=0, skiprows=[1, 2])
@@ -12,6 +13,18 @@ df['Day'] = df.index.day_name()
 day_dummies = pd.get_dummies(df['Day'], prefix='Day')
 df = pd.concat([df, day_dummies], axis=1)
 
+# Calculating RSI (showing momemtum in the market)
+change = df['Close'].diff()
+gain = (change.where(change > 0, 0))
+loss = (-change.where(change < 0, 0))
+
+avg_gain = gain.rolling(window=15).mean()
+avg_loss = loss.rolling(window=15).mean()
+
+rs = avg_gain / avg_loss
+df['RSI'] = 100 - (100 / (1 + rs))
+scaler = MinMaxScaler(feature_range=(0, 1))
+df['RSI_Scaled'] = scaler.fit_transform(df[['RSI']])
 # Getting rid of nans from shifting
 df.dropna(inplace=True)
 

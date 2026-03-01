@@ -8,7 +8,7 @@ from sklearn.ensemble import RandomForestClassifier
 df = pd.read_csv("../data/AAPL_engineered.csv")
 
 # Separate X to encoded columns and y to target column
-X = df[['Day_Monday', 'Day_Tuesday', 'Day_Wednesday', 'Day_Thursday', 'Day_Friday']]
+X = df[['Day_Monday', 'Day_Tuesday', 'Day_Wednesday', 'Day_Thursday', 'Day_Friday', 'RSI_Scaled']]
 y = df['Target']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)

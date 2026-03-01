@@ -1,0 +1,11 @@
+.idea/
+.DS_Store
+.DS_Store?
+._*
+.Trash/
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env

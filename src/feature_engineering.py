@@ -13,7 +13,7 @@ df['Day'] = df.index.day_name()
 day_dummies = pd.get_dummies(df['Day'], prefix='Day')
 df = pd.concat([df, day_dummies], axis=1)
 
-# Calculating RSI (showing momemtum in the market)
+# Calculating RSI (showing momentum in the market)
 change = df['Close'].diff()
 gain = (change.where(change > 0, 0))
 loss = (-change.where(change < 0, 0))

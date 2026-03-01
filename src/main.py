@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 
@@ -17,6 +17,11 @@ model = RandomForestClassifier(n_estimators=50)
 model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 print("Accuracy score: ", accuracy_score(y_test, y_pred))
-print(confusion_matrix(y_test, y_pred))
+cm = confusion_matrix(y_test, y_pred)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['Loss', 'Gain'])
+disp.plot(cmap=plt.cm.Purples)
+plt.figure(figsize=[10, 5])
+plt.tight_layout()
 plt.barh(model.feature_names_in_, model.feature_importances_)
+plt.savefig('../plots/features_importance.png')
 plt.show()
